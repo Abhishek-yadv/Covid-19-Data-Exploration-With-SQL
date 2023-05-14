@@ -12,22 +12,6 @@ SELECT *
 FROM PortfolioProject..CovidVaccinations$
 
 
-SELECT *
-FROM PortfolioProject..CovidDeaths$
-order by 3,4
-
-
-SELECT *
-FROM PortfolioProject..CovidVaccinations$
-order by 3,4
-
-
-/*****************************************/
-SELECT Location,date, total_cases, new_cases, total_deaths, population
-FROM PortfolioProject..CovidDeaths$
-order by 1,2
-
-
 /*****************************************/
 /*  total cases vs total deaths */
 SELECT Location, date, total_cases, total_deaths, (total_deaths/total_cases) * 100 AS DeathPercentage
@@ -126,6 +110,7 @@ ORDER BY TotalDeathCount DESC
 
 
 
+
 /******************************************/
 /* BREAKING THINGS DOWN BY CONTINENT */
 SELECT continent, MAX(cast(Total_deaths as int)) as TotalDeathCount
@@ -136,7 +121,7 @@ ORDER BY TotalDeathCount DESC
 
 
 
- /******/
+/******/
  SELECT continent, MAX(cast(Total_deaths as int)) as TotalDeathCount
 FROM PortfolioProject..CovidDeaths$
 WHERE continent is NOT null
@@ -238,6 +223,7 @@ WHERE dea.continent is not null
 ORDER BY 2,3
 
 
+
 /* Summon new_vaccination */
 SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
 , SUM(vac.new_vaccinations) OVER (PARTITION BY dea.Location)
@@ -248,6 +234,7 @@ JOIN PortfolioProject..CovidVaccinations$ vac
 WHERE dea.continent is not null
 ORDER BY 2,3
 -- NError Operand data type nvarchar is invalid for sum operator
+
 
 
 /******/
@@ -286,6 +273,7 @@ JOIN PortfolioProject..CovidVaccinations$ vac
     AND dea.date = vac.date
 WHERE dea.continent is not null
 ORDER BY 2,3
+
 
 
 /* Looking at total Population vs Vaccination */
